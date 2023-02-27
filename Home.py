@@ -1,11 +1,13 @@
 import streamlit as st
+from PIL import Image
 import pandas
 
 st.set_page_config(layout='wide')
 col1, col2 = st.columns(2)
+image = Image.open('images/photo1.jpg')
 
 with col1:
-    st.image('images/photo.png')
+    st.image(image)
 
 with col2:
     st.title('Fernando Hernandez')
@@ -38,7 +40,6 @@ df = pandas.read_csv("data.csv", sep=";")
 project_counter = len(df)
 split_col_value = int(project_counter/2)
 
-print(project_counter)
 with col3:
     for index, row in df[1:split_col_value].iterrows():
         st.header(row["title"])
