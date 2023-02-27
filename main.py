@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas
 
 st.set_page_config(layout='wide')
 col1, col2 = st.columns(2)
@@ -28,3 +29,26 @@ de mis estudios hasta el dia de hoy, estos contenidos se iran actualizando confo
 realicen nuevos proyentos
 """
 st.write(content2)
+
+col3, empty_col, col4 = st.columns([1.5, 0.5, 1.5])
+
+df = pandas.read_csv("data.csv", sep=";")
+
+# Obtenemos el numero total de proyectos y lo dividimos entre el numero de columnas
+project_counter = len(df)
+split_col_value = int(project_counter/2)
+
+print(project_counter)
+with col3:
+    for index, row in df[1:split_col_value].iterrows():
+        st.header(row["title"])
+        st.write(row["description"])
+        st.image("images/" + row["image"])
+        st.write(f"[Source code]({row['url']})")
+
+with col4:
+    for index, row in df[split_col_value:].iterrows():
+        st.header(row["title"])
+        st.write(row["description"])
+        st.image("images/" + row["image"])
+        st.write(f"[Source code]({row['url']})")
